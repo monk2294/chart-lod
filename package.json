@@ -1,0 +1,24 @@
+{
+  "name": "fast-chart",
+  "version": "0.0.1",
+  "description": "Fast linear 2d chart library",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monk2294/fast-chart.git"
+  },
+  "keywords": [
+    "canvas",
+    "chart",
+    "linear"
+  ],
+  "author": "bogdan.urazakaew@gmail.com",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/monk2294/fast-chart/issues"
+  },
+  "homepage": "https://github.com/monk2294/fast-chart#readme"
+}
