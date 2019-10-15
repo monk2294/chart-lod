@@ -12,4 +12,4 @@ export function simplifyDataForChart(data: RawDataType, from: number, to: number
     return simplifyLine(normalizeRawData(data), resolution).filter(i => i[0] >= from && i[0] <= to);
 }
 
-export { mergeSimplifiedLines as mergeData } from './lib';
+export { mergeSimplifiedLines } from './lib';

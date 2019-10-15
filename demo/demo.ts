@@ -1,6 +1,5 @@
 import * as Highcharts from 'highcharts';
-import { mergeSimplifiedLines } from '../src/lib';
-import { simplifyDataForChart } from '../src';
+import { simplifyDataForChart, mergeSimplifiedLines } from '../src';
 
 function getData(n: number) {
     let arr: [number, number][] = [],
