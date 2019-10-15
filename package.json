@@ -1,24 +1,29 @@
 {
-  "name": "fast-chart",
+  "name": "chart-lod",
   "version": "0.0.1",
-  "description": "Fast linear 2d chart library",
+  "description": "Library to create LOD (level of details) for line charts",
   "main": "lib/index.js",
   "scripts": {
-    "test": "jest"
+    "demo": "parcel demo/index.html",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/monk2294/fast-chart.git"
+    "url": "git+https://github.com/monk2294/chart-lod.git"
   },
   "keywords": [
-    "canvas",
     "chart",
     "linear"
   ],
   "author": "bogdan.urazakaew@gmail.com",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/monk2294/fast-chart/issues"
+    "url": "https://github.com/monk2294/chart-lod/issues"
   },
-  "homepage": "https://github.com/monk2294/fast-chart#readme"
+  "homepage": "https://github.com/monk2294/chart-lod#readme",
+  "devDependencies": {
+    "highcharts": "^7.2.0",
+    "parcel": "^1.12.3",
+    "typescript": "^3.5.3"
+  }
 }
