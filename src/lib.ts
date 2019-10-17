@@ -53,6 +53,19 @@ export function mergeSimplifiedLines(lowestLOD: [number, number][], currentLOD: 
     return merged;
 }
 
+/**
+ * Returns a slice of data array within given X coordinates
+ * @param d data array
+ * @param from X from
+ * @param to X to
+ */
+export function sliceData(d: [number, number][], from: number, to: number) {
+    const xFrom = findIndexByNearestX(d, from);
+    const xTo = findIndexByNearestX(d, to);
+    const result =  d.slice(xFrom, xTo);
+    return result;
+}
+
 export function computeResolutionFromWidth(width: number, from: number, to: number) {
     return (to - from) / width;
 }
