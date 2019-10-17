@@ -23,5 +23,5 @@ export function normalizeRawData(data: [number | Date, number][]) {
             return [x.getTime(), y];
         }
         return [x, y];
-    }) as [number, number][];
+    }) as [number, number][]
 }
