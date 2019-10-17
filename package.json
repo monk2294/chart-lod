@@ -6,8 +6,8 @@
   "scripts": {
     "test": "jest",
     "demo": "parcel demo/index.html",
-    "build": "tsc",
-    "prebuild": "rimraf lib"
+    "build": "rimraf lib & tsc",
+    "prebuild": "npm test"
   },
   "repository": {
     "type": "git",
