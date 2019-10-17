@@ -5,6 +5,9 @@
  */
 export function findIndexByNearestX(data: [number, number][], x: number) {
     const len = data.length;
+    if (len < 1) {
+        return 0;
+    }
     if (x >= data[len - 1][0]) {
         return len - 1;
     }
@@ -33,7 +36,7 @@ export function findIndexByNearestX(data: [number, number][], x: number) {
 /**
  * Returns combined data array, where areas outside of currentLOD data array are
  * filled with values from lowestLOD data array
- * @param lowestLOD low LOD data array for background
+ * @param lowestLOD lowest LOD data array for background
  * @param currentLOD current LOD data array for main area
  */
 export function mergeSimplifiedLines(lowestLOD: [number, number][], currentLOD: [number, number][]) {
