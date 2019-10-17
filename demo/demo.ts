@@ -1,5 +1,6 @@
 import * as Highcharts from 'highcharts';
 import { simplifyDataForChart, mergeSimplifiedLines } from '../src';
+import { createWorkerClient } from '../src/worker-client';
 
 function getData(n: number) {
     let arr: [number, number][] = [],
@@ -64,19 +65,17 @@ const chart = Highcharts.chart('chart', {
         events: {
             setExtremes: event => {
                 const isPan = event.trigger === 'pan';
+                const isResetZoom = event.trigger === 'zoom' &&
+                    event.min === undefined &&
+                    event.max === undefined;
                 const width = chart.chartWidth;
                 const min = event.min || globalMinX;
                 const max = event.max || globalMaxX;
-                if (min !== undefined && max !== undefined) {
-                    if (isPan) {
-                        updateDataDebounced(data, min, max, width)
-                    } else {
-                        updateData(data, min, max, width);
-                    }
+                if (isResetZoom) {
+                    setDataToChart(minLOD);
+                } else if (min !== undefined && max !== undefined) {
+                    updateData({ from: min, to: max, chartWidth: width }, data, minLOD);
                 }
-            },
-            afterSetExtremes: event => {
-                console.log(event);
             }
         }
     },
@@ -89,17 +88,17 @@ const chart = Highcharts.chart('chart', {
     }]
 });
 
-function updateData(...args: Parameters<typeof simplifyDataForChart>) {
-    chart.xAxis[0].series[0].setData(mergeSimplifiedLines(minLOD, simplifyDataForChart(...args)), true);
+function setDataToChart(data) {
+    chart.xAxis[0].series[0].setData(data, true);
 }
 
-let debounceTimer: any = null;
-function updateDataDebounced(...args: Parameters<typeof simplifyDataForChart>) {
-    if (debounceTimer) {
-        clearTimeout(debounceTimer);
+let timer: any = null;
+function updateData(...args: [any, any, any]) {
+    if (timer) {
+        clearTimeout(timer);
     }
-    debounceTimer = setTimeout(() => {
-        debounceTimer = null;
-        updateData(...args);
-    }, 1000);
+    timer = setTimeout(() => wc.execute.simplifyAndMerge(...args), 800);
 }
+
+const wc = createWorkerClient(new Worker('./worker.ts'));
+wc.onData = setDataToChart;
