@@ -6,7 +6,8 @@
   "scripts": {
     "demo": "parcel demo/index.html",
     "build": "tsc",
-    "preversion": "rimraf lib & npm run build"
+    "preversion": "rimraf lib & npm run build",
+    "prepublish": "npm version"
   },
   "repository": {
     "type": "git",
