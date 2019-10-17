@@ -18,11 +18,10 @@ export function simplifyLine(data: [number, number][], resolution: number) {
 }
 
 export function normalizeRawData(data: [number | Date, number][]) {
-    const result = data.map(([x, y]) => {
+    return data.map(([x, y]) => {
         if (x instanceof Date) {
             return [x.getTime(), y];
         }
         return [x, y];
-    }) as [number, number][];
-    return result;
+    }) as [number, number][]
 }

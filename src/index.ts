@@ -2,14 +2,11 @@ import { simplifyLine } from './engine';
 import { computeResolutionFromWidth, findIndexByNearestX } from './lib';
 
 export function simplifyDataForResolution(data: [number, number][], from: number, to: number, resolution: number) {
-    const result = sliceData(simplifyLine(data, resolution), from, to)
-    return result;
+    return sliceData(simplifyLine(data, resolution), from, to)
 }
 
 export function simplifyDataForChart(data: [number, number][], from: number, to: number, chartWidth: number) {
-    let resolution: number = computeResolutionFromWidth(chartWidth, from, to);
-    const result = simplifyLine(sliceData(data, from, to), resolution);
-    return result;
+    return simplifyLine(sliceData(data, from, to), computeResolutionFromWidth(chartWidth, from, to));
 }
 
 function sliceData(d: [number, number][], from: number, to: number) {
