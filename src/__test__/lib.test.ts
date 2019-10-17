@@ -1,4 +1,4 @@
-import { findIndexByNearestX, mergeSimplifiedLines, sliceData, computeResolutionFromWidth } from './lib';
+import { findIndexByNearestX, mergeSimplifiedLines, sliceData, computeResolutionFromWidth } from '../lib';
 
 const generateData = (n: number, from: number = 0, inc: number = 1) => {
     const result: [number, number][] = [];

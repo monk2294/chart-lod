@@ -1,4 +1,4 @@
-import { normalizeRawData, simplifyLine } from './engine';
+import { normalizeRawData, simplifyLine } from '../engine';
 
 describe('simplifyLine', () => {
     const generateData = (n: number) => {

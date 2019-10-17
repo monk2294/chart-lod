@@ -1,4 +1,4 @@
-import { packToArrayBuffer, unpackFromArrayBuffer } from './typedArrays';
+import { packToArrayBuffer, unpackFromArrayBuffer } from '../typedArrays';
 
 const generateData = (n: number, from: number = 0, inc: number = 1) => {
     const result: [number, number][] = [];
