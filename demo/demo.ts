@@ -8,9 +8,9 @@ function getData(n: number) {
         c: number = 0,
         spike: number;
     for (
-        let i = 0, x = Date.UTC(new Date().getUTCFullYear(), 0, 1);
+        let i = 0, x = Date.UTC(new Date().getUTCFullYear(), 0, 1) - n * 36e5;
         i < n;
-        i = i + 1, x = x + 100
+        i = i + 1, x = x + 36e5
     ) {
         if (i % 100 === 0) {
             a = 2 * Math.random();
@@ -34,7 +34,7 @@ function getData(n: number) {
     return arr;
 }
 
-const points = 100000;
+const points = 1000000;
 const data = getData(points).sort((a, b) => a[0] - b[0]);
 const globalMinX = data[0][0];
 const globalMaxX = data[data.length - 1][0];
