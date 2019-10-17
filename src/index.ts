@@ -2,7 +2,7 @@ import { simplifyLine } from './engine';
 import { computeResolutionFromWidth, sliceData } from './lib';
 
 export function simplifyDataForResolution(data: [number, number][], from: number, to: number, resolution: number) {
-    return sliceData(simplifyLine(data, resolution), from, to)
+    return simplifyLine(sliceData(data, from, to), resolution);
 }
 
 export function simplifyDataForChart(data: [number, number][], from: number, to: number, chartWidth: number) {
