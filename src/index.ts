@@ -1,15 +1,22 @@
-import { normalizeRawData, simplifyLine } from './engine';
-import { computeResolutionFromWidth } from './lib';
+import { simplifyLine } from './engine';
+import { computeResolutionFromWidth, findIndexByNearestX } from './lib';
 
-type RawDataType = Parameters<typeof normalizeRawData>[0];
-
-export function simplifyDataForResolution(data: RawDataType, from: number, to: number, resolution: number) {
-    return simplifyLine(normalizeRawData(data), resolution).filter(i => i[0] >= from && i[0] <= to);
+export function simplifyDataForResolution(data: [number, number][], from: number, to: number, resolution: number) {
+    const result = sliceData(simplifyLine(data, resolution), from, to)
+    return result;
 }
 
-export function simplifyDataForChart(data: RawDataType, from: number, to: number, chartWidth: number) {
+export function simplifyDataForChart(data: [number, number][], from: number, to: number, chartWidth: number) {
     let resolution: number = computeResolutionFromWidth(chartWidth, from, to);
-    return simplifyLine(normalizeRawData(data), resolution).filter(i => i[0] >= from && i[0] <= to);
+    const result = simplifyLine(sliceData(data, from, to), resolution);
+    return result;
+}
+
+function sliceData(d: [number, number][], from: number, to: number) {
+    const xFrom = findIndexByNearestX(d, from);
+    const xTo = findIndexByNearestX(d, to);
+    const result =  d.slice(xFrom, xTo);
+    return result;
 }
 
 export { mergeSimplifiedLines } from './lib';

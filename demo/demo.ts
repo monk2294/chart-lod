@@ -1,6 +1,5 @@
 import * as Highcharts from 'highcharts';
 import { simplifyDataForChart, mergeSimplifiedLines } from '../src';
-import { createWorkerClient } from '../src/worker-client';
 
 function getData(n: number) {
     let arr: [number, number][] = [],
@@ -9,9 +8,9 @@ function getData(n: number) {
         c: number = 0,
         spike: number;
     for (
-        let i = 0, x = Date.UTC(new Date().getUTCFullYear(), 0, 1) - n * 36e5;
+        let i = 0, x = Date.UTC(new Date().getUTCFullYear(), 0, 1);
         i < n;
-        i = i + 1, x = x + 36e5
+        i = i + 1, x = x + 100
     ) {
         if (i % 100 === 0) {
             a = 2 * Math.random();
@@ -35,7 +34,7 @@ function getData(n: number) {
     return arr;
 }
 
-const points = 1000000;
+const points = 100000;
 const data = getData(points).sort((a, b) => a[0] - b[0]);
 const globalMinX = data[0][0];
 const globalMaxX = data[data.length - 1][0];
@@ -89,7 +88,7 @@ const chart = Highcharts.chart('chart', {
 });
 
 function setDataToChart(data) {
-    chart.xAxis[0].series[0].setData(data, true);
+    chart.xAxis[0].series[0].setData(data, true, false);
 }
 
 let timer: any = null;
@@ -97,8 +96,9 @@ function updateData(...args: [any, any, any]) {
     if (timer) {
         clearTimeout(timer);
     }
-    timer = setTimeout(() => wc.execute.simplifyAndMerge(...args), 800);
+    timer = setTimeout(() => {
+        const [{ from, to, chartWidth }, data, baseLOD] = args;
+        setDataToChart(mergeSimplifiedLines(baseLOD, simplifyDataForChart(data, from, to, chartWidth)));
+        timer = null;
+    }, 100);
 }
-
-const wc = createWorkerClient(new Worker('./worker.ts'));
-wc.onData = setDataToChart;
