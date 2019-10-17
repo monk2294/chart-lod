@@ -1,14 +1,12 @@
 {
   "name": "chart-lod",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Library to create LOD (level of details) for line charts",
   "main": "lib/index.js",
   "scripts": {
     "demo": "parcel demo/index.html",
     "build": "tsc",
-    "prebuild": "rimraf lib",
-    "preversion": "npm run build",
-    "version": "git add -A & git commit -m \"new lib build\""
+    "prebuild": "rimraf lib"
   },
   "repository": {
     "type": "git",
