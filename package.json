@@ -7,7 +7,7 @@
     "demo": "parcel demo/index.html",
     "build": "tsc",
     "prebuild": "rimraf lib",
-    "preversion": "npm run build & git add -all -m \"new lib build\""
+    "preversion": "npm run build & git add --all -m \"new lib build\""
   },
   "repository": {
     "type": "git",
