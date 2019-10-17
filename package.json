@@ -1,6 +1,6 @@
 {
   "name": "chart-lod",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Library to create LOD (level of details) for line charts",
   "main": "lib/index.js",
   "scripts": {
