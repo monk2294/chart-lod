@@ -1,4 +1,4 @@
-import { findIndexByNearestX, mergeSimplifiedLines } from './lib';
+import { findIndexByNearestX, mergeSimplifiedLines, sliceData, computeResolutionFromWidth } from './lib';
 
 const generateData = (n: number, from: number = 0, inc: number = 1) => {
     const result: [number, number][] = [];
@@ -78,5 +78,42 @@ describe('mergeSimplifiedLines', () => {
         for (let j = 0; j < lod.length; i++, j++) {
             expect(merged[i]).toEqual(lod[j]);
         }
+    });
+});
+
+describe('sliceData', () => {
+    it('should return correct slice of data', () => {
+        const data = generateData(15, 0, 2); // [[0, float], [2, float], ..., [198, float]]
+        [
+            {
+                sliceParams: { from: 5, to: 10 },
+                firstX: 6,
+                lastX: 10
+            },
+            {
+                sliceParams: { from: 5, to: 8.5 },
+                firstX: 6,
+                lastX: 8
+            },
+            {
+                sliceParams: { from: 4, to: 8.99 },
+                firstX: 4,
+                lastX: 8
+            },
+        ].forEach(({ sliceParams: { from, to }, firstX, lastX }) => {
+            const slice = sliceData(data, from, to);
+            expect(slice[0][0]).toBe(firstX);
+            expect(slice[slice.length - 1][0]).toBe(lastX);
+        });
+    });
+});
+
+describe('computeResolutionFromWidth', () => {
+    it('should return correct result', () => {
+        const to = 5000;
+        const from = 4000;
+        const width = 800;
+        expect(computeResolutionFromWidth(width, from, to))
+            .toBe((to - from) / width)
     });
 });

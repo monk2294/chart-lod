@@ -18,12 +18,14 @@ export function findIndexByNearestX(data: [number, number][], x: number) {
     let to: number = len;
     let pointer = Math.floor((to - from) / 2);
     while (to - from > 1) {
-        if (data[pointer][0] >= x) {
+        if (data[pointer][0] > x) {
             // x on left side
             to = pointer;
-        } else {
+        } else if (data[pointer][0] < x) {
             // x on right side
             from = pointer;
+        } else {
+            return pointer;
         }
         pointer = Math.floor((to - from) / 2 + from);
     }
@@ -65,7 +67,7 @@ export function mergeSimplifiedLines(lowestLOD: [number, number][], currentLOD: 
 export function sliceData(d: [number, number][], from: number, to: number) {
     const xFrom = findIndexByNearestX(d, from);
     const xTo = findIndexByNearestX(d, to);
-    const result =  d.slice(xFrom, xTo);
+    const result =  d.slice(xFrom, xTo + 1);
     return result;
 }
 
