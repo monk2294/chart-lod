@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "demo": "parcel demo/index.html",
-    "build": "tsc"
+    "build": "tsc",
+    "preversion": "rimraf lib & npm run build"
   },
   "repository": {
     "type": "git",
@@ -23,7 +24,8 @@
   "homepage": "https://github.com/monk2294/chart-lod#readme",
   "devDependencies": {
     "highcharts": "^7.2.0",
-    "parcel": "^1.12.3",
+    "parcel": "^1.12.4",
+    "rimraf": "^3.0.0",
     "typescript": "^3.5.3"
   }
 }
