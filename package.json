@@ -4,9 +4,10 @@
   "description": "Library to create LOD (level of details) for line charts",
   "main": "lib/index.js",
   "scripts": {
+    "test": "jest",
     "demo": "parcel demo/index.html",
-    "build": "tsc",
-    "prebuild": "rimraf lib"
+    "build": "rimraf lib & tsc",
+    "prebuild": "npm test"
   },
   "repository": {
     "type": "git",
@@ -23,9 +24,12 @@
   },
   "homepage": "https://github.com/monk2294/chart-lod#readme",
   "devDependencies": {
+    "@types/jest": "^24.0.19",
     "highcharts": "^7.2.0",
+    "jest": "^24.9.0",
     "parcel": "^1.12.4",
     "rimraf": "^3.0.0",
+    "ts-jest": "^24.1.0",
     "typescript": "^3.5.3"
   }
 }

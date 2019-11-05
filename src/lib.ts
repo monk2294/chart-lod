@@ -5,6 +5,9 @@
  */
 export function findIndexByNearestX(data: [number, number][], x: number) {
     const len = data.length;
+    if (len < 1) {
+        return 0;
+    }
     if (x >= data[len - 1][0]) {
         return len - 1;
     }
@@ -15,12 +18,14 @@ export function findIndexByNearestX(data: [number, number][], x: number) {
     let to: number = len;
     let pointer = Math.floor((to - from) / 2);
     while (to - from > 1) {
-        if (data[pointer][0] >= x) {
+        if (data[pointer][0] > x) {
             // x on left side
             to = pointer;
-        } else {
+        } else if (data[pointer][0] < x) {
             // x on right side
             from = pointer;
+        } else {
+            return pointer;
         }
         pointer = Math.floor((to - from) / 2 + from);
     }
@@ -33,7 +38,7 @@ export function findIndexByNearestX(data: [number, number][], x: number) {
 /**
  * Returns combined data array, where areas outside of currentLOD data array are
  * filled with values from lowestLOD data array
- * @param lowestLOD low LOD data array for background
+ * @param lowestLOD lowest LOD data array for background
  * @param currentLOD current LOD data array for main area
  */
 export function mergeSimplifiedLines(lowestLOD: [number, number][], currentLOD: [number, number][]) {
@@ -51,6 +56,19 @@ export function mergeSimplifiedLines(lowestLOD: [number, number][], currentLOD: 
         merged[i] = lowestLOD[j];
     }
     return merged;
+}
+
+/**
+ * Returns a slice of data array within given X coordinates
+ * @param d data array
+ * @param from X from
+ * @param to X to
+ */
+export function sliceData(d: [number, number][], from: number, to: number) {
+    const xFrom = findIndexByNearestX(d, from);
+    const xTo = findIndexByNearestX(d, to);
+    const result =  d.slice(xFrom, xTo + 1);
+    return result;
 }
 
 export function computeResolutionFromWidth(width: number, from: number, to: number) {
