@@ -1,27 +1,34 @@
+import { Data, Point } from "./types";
+
+export const point = {
+    x: (p: Point) => p instanceof Array ? p[0] : p.x,
+    y: (p: Point) => p instanceof Array ? p[1] : p.y,
+};
+
 /**
  * Search index of point inside data array by nearest X-axis value.
  * @param data data array
  * @param x x-axis value
  */
-export function findIndexByNearestX(data: [number, number][], x: number) {
+export function findIndexByNearestX(data: Data, x: number) {
     const len = data.length;
     if (len < 1) {
         return 0;
     }
-    if (x >= data[len - 1][0]) {
+    if (x >= point.x(data[len - 1])) {
         return len - 1;
     }
-    if (x <= data[0][0]) {
+    if (x <= point.x(data[0])) {
         return 0;
     }
     let from: number = 0;
-    let to: number = len;
+    let to: number = len - 1;
     let pointer = Math.floor((to - from) / 2);
     while (to - from > 1) {
-        if (data[pointer][0] > x) {
+        if (point.x(data[pointer]) > x) {
             // x on left side
             to = pointer;
-        } else if (data[pointer][0] < x) {
+        } else if (point.x(data[pointer]) < x) {
             // x on right side
             from = pointer;
         } else {
@@ -29,7 +36,7 @@ export function findIndexByNearestX(data: [number, number][], x: number) {
         }
         pointer = Math.floor((to - from) / 2 + from);
     }
-    if (Math.abs(x - data[from][0]) < Math.abs(x - data[to][0])) {
+    if (Math.abs(x - point.x(data[from])) < Math.abs(x - point.x(data[to]))) {
         return from;
     }
     return to;
@@ -41,10 +48,10 @@ export function findIndexByNearestX(data: [number, number][], x: number) {
  * @param lowestLOD lowest LOD data array for background
  * @param currentLOD current LOD data array for main area
  */
-export function mergeSimplifiedLines(lowestLOD: [number, number][], currentLOD: [number, number][]) {
-    const from = findIndexByNearestX(lowestLOD, currentLOD[0][0]);
-    const to = findIndexByNearestX(lowestLOD, currentLOD[currentLOD.length - 1][0]);
-    const merged: [number, number][] = [];
+export function mergeSimplifiedLines(lowestLOD: Data, currentLOD: Data) {
+    const from = findIndexByNearestX(lowestLOD, point.x(currentLOD[0]));
+    const to = findIndexByNearestX(lowestLOD, point.x(currentLOD[currentLOD.length - 1]));
+    const merged: Data = [];
     let i = 0, j = 0;
     for (j = 0; j < from; j++, i++) {
         merged[i] = lowestLOD[j];
@@ -64,7 +71,7 @@ export function mergeSimplifiedLines(lowestLOD: [number, number][], currentLOD: 
  * @param from X from
  * @param to X to
  */
-export function sliceData(d: [number, number][], from: number, to: number) {
+export function sliceData(d: Data, from: number, to: number) {
     const xFrom = findIndexByNearestX(d, from);
     const xTo = findIndexByNearestX(d, to);
     const result =  d.slice(xFrom, xTo + 1);
