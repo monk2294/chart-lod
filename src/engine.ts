@@ -2,7 +2,7 @@ import { Data } from "./types";
 import { point } from "./lib";
 
 export function simplifyLine(data: Data, resolution: number) {
-    let result: Data = [];
+    let result: [number, number][] = [];
     if (data.length < 1) {
         return result;
     }

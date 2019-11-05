@@ -1,4 +1,4 @@
-import { findIndexByNearestX, mergeSimplifiedLines, sliceData, computeResolutionFromWidth } from '../lib';
+import { findIndexByNearestX, mergeSimplifiedLines, sliceData, computeResolutionFromWidth, point } from '../lib';
 
 const generateData = (n: number, from: number = 0, inc: number = 1) => {
     const result: [number, number][] = [];
@@ -102,8 +102,8 @@ describe('sliceData', () => {
             },
         ].forEach(({ sliceParams: { from, to }, firstX, lastX }) => {
             const slice = sliceData(data, from, to);
-            expect(slice[0][0]).toBe(firstX);
-            expect(slice[slice.length - 1][0]).toBe(lastX);
+            expect(point.x(slice[0])).toBe(firstX);
+            expect(point.x(slice[slice.length - 1])).toBe(lastX);
         });
     });
 });
