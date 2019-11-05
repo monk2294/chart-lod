@@ -1,15 +1,19 @@
-export function simplifyLine(data: [number, number][], resolution: number) {
-    let result: [number, number][] = [];
+import { Data } from "./types";
+import { point } from "./lib";
+
+export function simplifyLine(data: Data, resolution: number) {
+    let result: Data = [];
     if (data.length < 1) {
         return result;
     }
     let count = 0;
     let ySum = 0;
-    let xTo = data[0][0] + resolution;
-    let [x, y] = data[0];
+    let xTo = point.x(data[0]) + resolution;
+    let x = point.x(data[0]);
+    let y = point.y(data[0]);
     for (let i = 0; i < data.length; i++) {
-        x = data[i][0];
-        y = data[i][1];
+        x = point.x(data[i]);
+        y = point.y(data[i]);
         ySum += y;
         count++;
         if (x >= xTo) {
