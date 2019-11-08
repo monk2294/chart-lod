@@ -35,7 +35,13 @@ function getData(n: number) {
 }
 
 const points = 1000000;
-const data = getData(points).sort((a, b) => a[0] - b[0]);
+const data = getData(points).sort((a, b) => a[0] - b[0])
+// .map((p, index) => {
+//     if (index > 100000 && index < 510000) {
+//         return null;
+//     }
+//     return p;
+// });
 const globalMinX = data[0][0];
 const globalMaxX = data[data.length - 1][0];
 
@@ -56,7 +62,10 @@ const chart = Highcharts.chart('chart', {
     },
 
     tooltip: {
-        valueDecimals: 2
+        valueDecimals: 2,
+        formatter: function () {
+            return `x=${this.x}, y=${this.y}`;
+        }
     },
 
     xAxis: {
@@ -83,7 +92,8 @@ const chart = Highcharts.chart('chart', {
         type: 'line',
         data: minLOD,
         lineWidth: 1,
-        name: 'random data'
+        name: 'random data',
+        connectNulls: false,
     }]
 });
 

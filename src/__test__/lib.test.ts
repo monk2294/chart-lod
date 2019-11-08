@@ -1,4 +1,5 @@
 import { findIndexByNearestX, mergeSimplifiedLines, sliceData, computeResolutionFromWidth, point } from '../lib';
+import { NoValuablePointError } from '../errors';
 
 const generateData = (n: number, from: number = 0, inc: number = 1) => {
     const result: [number, number][] = [];
@@ -12,9 +13,10 @@ const generateData = (n: number, from: number = 0, inc: number = 1) => {
 };
 
 describe('findIndexByNearestX', () => {
-    it('should return 0 for empty array', () => {
-        const index = findIndexByNearestX([], 0);
-        expect(index).toBe(0);
+    it('should throw error for empty array', () => {
+        expect(() => findIndexByNearestX([], 0)).toThrowError(NoValuablePointError);
+        // const index = findIndexByNearestX([], 0);
+        // expect(index).toBe(0);
     });
 
     it('should find index of point if given X is inside array', () => {
