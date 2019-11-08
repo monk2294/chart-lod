@@ -1,14 +1,17 @@
-import { Data, Point } from "./types";
+import { Data, RawData, RawPoint, ValuablePoint, Point } from "./types";
+declare type ExtractorReturn<T> = T extends [number, null] ? number | null : T extends ValuablePoint ? number : never;
+declare function extractX<T>(p: T): ExtractorReturn<T>;
+declare function extractY<T extends Point>(p: T): ExtractorReturn<T>;
 export declare const point: {
-    x: (p: Point) => number;
-    y: (p: Point) => number;
+    x: typeof extractX;
+    y: typeof extractY;
 };
 /**
  * Search index of point inside data array by nearest X-axis value.
  * @param data data array
  * @param x x-axis value
  */
-export declare function findIndexByNearestX(data: Data, x: number): number;
+export declare function findIndexByNearestX(data: RawData, x: number): number;
 /**
  * Returns combined data array, where areas outside of currentLOD data array are
  * filled with values from lowestLOD data array
@@ -22,5 +25,8 @@ export declare function mergeSimplifiedLines(lowestLOD: Data, currentLOD: Data):
  * @param from X from
  * @param to X to
  */
-export declare function sliceData(d: Data, from: number, to: number): Point[];
+export declare function sliceData(d: RawData, from: number, to: number): RawPoint[];
 export declare function computeResolutionFromWidth(width: number, from: number, to: number): number;
+export declare function findNearestValuablePoint(data: RawData, index: number): ValuablePoint;
+export declare function isValuablePoint(point: RawPoint): boolean;
+export {};
